@@ -18,24 +18,12 @@ class BurgerBuilder extends Component{
         super(props);
         this.state ={
             purchasing:false,
-            loading:false,
-            error:false
         }
     }
 
     componentDidMount(){
         //console.log(this.props);
-        // if(!this.state.ingredients){
-        //     axios.get('/ingredients.json')
-        //     .then(response =>{
-        //         this.setState({
-        //             ingredients:response.data
-        //         });
-        //     })
-        //     .catch(err=>{
-        //         this.setState({error:true});
-        //     });
-        // }
+        this.props.onInitIngredients();
     }
     isBurgerPurchasable(ingredients) {
         const sum = Object.keys(ingredients)
@@ -72,7 +60,7 @@ class BurgerBuilder extends Component{
         }
         let orderSummary = null;
 
-        let burger = this.state.error?<p>Ingredients can't be loaded!</p>: <Spinner/>;
+        let burger = this.props.error?<p>Ingredients can't be loaded!</p>: <Spinner/>;
         if(this.props.ings){
             burger = (
                 <Aux>
@@ -97,10 +85,6 @@ class BurgerBuilder extends Component{
             );
         }
 
-        if(this.state.loading){
-            orderSummary = <Spinner/>
-        }
-        
         return (
             <Aux>
                 <Modal show ={this.state.purchasing} modalClosed ={this.purchaseCancelHandler}>
@@ -117,14 +101,16 @@ const mapStateToProps = state => {
 
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     };
 }
 
 const mapDispatchToProps = dispatch =>{
     return {
         onIngredientAdded: (ing) => dispatch(burgerBuilderActions.addIngredient(ing)),
-        onIngredientRemoved: (ing) => dispatch(burgerBuilderActions.removeIngredient(ing))
+        onIngredientRemoved: (ing) => dispatch(burgerBuilderActions.removeIngredient(ing)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
     };
 }
 
