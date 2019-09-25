@@ -3,6 +3,7 @@ import Aux from '../Auxiliary/Auxiliary';
 import classes from './Layout.css';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
+import {connect} from 'react-redux';
 
 class Layout extends Component{
 
@@ -20,8 +21,12 @@ class Layout extends Component{
     render(){
         return(
             <Aux>
-                <Toolbar drawerToggleClicked ={this.sideDrawerToggleHandler}/>
-                <SideDrawer show={this.state.showSideDrawer} closed={this.sideDrawarClosedHandler}/>
+                <Toolbar 
+                isAuth={this.props.isAuthenticated}
+                drawerToggleClicked ={this.sideDrawerToggleHandler}/>
+                <SideDrawer 
+                isAuth={this.props.isAuthenticated}
+                show={this.state.showSideDrawer} closed={this.sideDrawarClosedHandler}/>
                 <main className={classes.Content}>
                     {this.props.children}
                 </main>
@@ -31,4 +36,20 @@ class Layout extends Component{
 }
 
 
-export default Layout;
+const mapStateToProps = state => {
+
+    return {
+        isAuthenticated: state.auth.token !== null
+    };
+}
+
+// const mapDispatchToProps = dispatch =>{
+//     return {
+//         onIngredientAdded: (ing) => dispatch(actions.addIngredient(ing)),
+//         onIngredientRemoved: (ing) => dispatch(actions.removeIngredient(ing)),
+//         onInitIngredients: () => dispatch(actions.initIngredients()),
+//         onInitPurchase : () => dispatch(actions.purchaseInit())
+//     };
+// }
+
+export default connect(mapStateToProps)(Layout);

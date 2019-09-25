@@ -1,13 +1,13 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
-export const authStart = () =>{
+const authStart = () =>{
     return{
         type:actionTypes.AUTH_START
     };
 };
 
-export const authSuccess = (token,userId) =>{
+const authSuccess = (token,userId) =>{
     return{
         type:actionTypes.AUTH_SUCCESS,
         token:token,
@@ -15,7 +15,7 @@ export const authSuccess = (token,userId) =>{
     };
 };
 
-export const authFail = (err) =>{
+const authFail = (err) =>{
     return{
         type:actionTypes.AUTH_FAIL,
         error:err
@@ -24,7 +24,7 @@ export const authFail = (err) =>{
 
 
 
-const logout = () =>{
+export const logout = () =>{
     return{
         type:actionTypes.AUTH_LOGOUT
     };
