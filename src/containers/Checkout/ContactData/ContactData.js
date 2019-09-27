@@ -7,7 +7,7 @@ import Input from '../../../components/UI/Input/Input';
 import {connect} from 'react-redux';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as orderActions from '../../../store/actions/index';
-import {updateObject} from '../../../shared/utility';
+import {checkValidity} from '../../../shared/utility';
 class ContactData extends Component{
     state={
         orderForm: {            
@@ -118,46 +118,6 @@ class ContactData extends Component{
         this.props.onPurchaseStart(order,this.props.token);
     }
 
-    checkValidity = (value, rules) =>{
-        let isValid = false;
-        if(rules){
-            if(rules.required){
-                if(value.trim() === ''){
-                    return false;
-                }
-            }
-            if(rules.minLength){
-                if(value.trim().length<rules.minLength){
-                    return false;
-                }
-            }
-    
-            if(rules.maxLength){
-                if(value.trim().length>rules.maxLength){
-                    return false;
-                }
-            }
-
-            if (rules.isEmail) {
-                const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-                if(!pattern.test(value))
-                {
-                    return false;
-                }
-            }
-    
-            if (rules.isNumeric) {
-                const pattern = /^\d+$/;
-                if(!pattern.test(value))
-                {
-                    return false;
-                }
-            }
-        }
-
-
-        return true;
-    }
     inputChangedHandler = (event, inputIdentifier) =>{
         const updatedOrderForm = {
             ...this.state.orderForm
@@ -167,7 +127,7 @@ class ContactData extends Component{
             ...updatedOrderForm[inputIdentifier]
         };
         updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
+        updatedFormElement.valid = checkValidity(updatedFormElement.value, updatedFormElement.validation);
         updatedFormElement.touched = true;
         updatedOrderForm[inputIdentifier] = updatedFormElement;
         let allValid = true;

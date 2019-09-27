@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import { timingSafeEqual } from 'crypto';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import {Redirect} from 'react-router-dom';
+import {checkValidity} from '../../shared/utility';
 
 class Auth extends Component {
 
@@ -43,46 +44,6 @@ class Auth extends Component {
         },
         isSignUp:true
     }
-    checkValidity = (value, rules) =>{
-        let isValid = false;
-        if(rules){
-            if(rules.required){
-                if(value.trim() === ''){
-                    return false;
-                }
-            }
-            if(rules.minLength){
-                if(value.trim().length<rules.minLength){
-                    return false;
-                }
-            }
-    
-            if(rules.maxLength){
-                if(value.trim().length>rules.maxLength){
-                    return false;
-                }
-            }
-
-            if (rules.isEmail) {
-                const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-                if(!pattern.test(value))
-                {
-                    return false;
-                }
-            }
-    
-            if (rules.isNumeric) {
-                const pattern = /^\d+$/;
-                if(!pattern.test(value))
-                {
-                    return false;
-                }
-            }
-        }
-
-
-        return true;
-    }
 
     inputChangedHandler = (event, controlName) =>{
         const updatedControls = {
@@ -90,7 +51,7 @@ class Auth extends Component {
             [controlName]:{
                 ...this.state.controls[controlName],
                 value:event.target.value,
-                valid:this.checkValidity(event.target.value,this.state.controls[controlName].validation),
+                valid:checkValidity(event.target.value,this.state.controls[controlName].validation),
                 touched:true
             }
         };
