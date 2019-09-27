@@ -7,7 +7,7 @@ import Input from '../../../components/UI/Input/Input';
 import {connect} from 'react-redux';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as orderActions from '../../../store/actions/index';
-
+import {updateObject} from '../../../shared/utility';
 class ContactData extends Component{
     state={
         orderForm: {            
