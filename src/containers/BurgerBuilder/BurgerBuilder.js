@@ -22,7 +22,6 @@ class BurgerBuilder extends Component{
     }
 
     componentDidMount(){
-        //console.log(this.props);
         this.props.onInitIngredients();
     }
     isBurgerPurchasable(ingredients) {

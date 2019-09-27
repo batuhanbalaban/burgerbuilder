@@ -4,7 +4,6 @@ import Button from '../../components/UI/Button/Button';
 import classes from './Auth.css';
 import * as actions from '../../store/actions/index';
 import {connect} from 'react-redux';
-import { timingSafeEqual } from 'crypto';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import {Redirect} from 'react-router-dom';
 import {checkValidity} from '../../shared/utility';
