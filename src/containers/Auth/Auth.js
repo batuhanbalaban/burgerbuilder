@@ -41,7 +41,7 @@ class Auth extends Component {
                 touched:false
             }
         },
-        isSignUp:true
+        isSignUp:false
     }
 
     inputChangedHandler = (event, controlName) =>{
@@ -114,11 +114,11 @@ class Auth extends Component {
                 {errorMessage}
                 <form onSubmit={this.submitHandler}>
                     {form}
-                    <Button btnType="Success">SUBMIT</Button>
+                    <Button btnType="Success">{this.state.isSignUp?'SIGNUP':'LOGIN'}</Button>
                 </form>
                 <Button 
                 clicked={this.switchAuthModeHandler}
-                btnType="Danger">SWITCH TO {this.state.isSignUp?'SIGNIN':'SIGNUP'}</Button>
+                btnType="Danger">{this.state.isSignUp?'Already Member? Switch to Login':'Not a  Member? Switch to Signup'}</Button>
             </div>
         );
     }
